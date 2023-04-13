@@ -35,7 +35,7 @@ public class JobData {
         ArrayList<String> values = new ArrayList<>();
 
         for (HashMap<String, String> row : allJobs) {
-            String aValue = row.get(field);
+            String aValue = row.get(field).toLowerCase();
 
             if (!values.contains(aValue)) {
                 values.add(aValue);
@@ -80,7 +80,7 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -94,7 +94,7 @@ public class JobData {
      * @param value The search term to look for
      * @return      List of all jobs with at least one field containing the value
      */
-    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+    public static ArrayList<HashMap<String, String>> findByValue(String aValue) {
 
         // load data, if not already loaded
         loadData();
@@ -122,16 +122,16 @@ public class JobData {
         for (HashMap<String, String> row : allJobs) {
             //System.out.println("row.keySet(): " + row.keySet());
             //for (String key : row.keySet()) {
-            for (String rowValue : row.values()) { //loops through the values of one hashmap
-                if(rowValue.toLowerCase().contains(value.toLowerCase())) {
+            for (String value : row.values()) { //loops through just the values of one hashmap, little cleaner
+                if(value.toLowerCase().contains(aValue.toLowerCase())) {
                     jobs.add(row);
                     break;
                 }
                 /*
                 System.out.println("Key: " + key);
-                String rowValue = row.get(key);
-                System.out.println("row.get(key): " + rowValue);
-                if(row.get(key).toLowerCase().contains(value.toLowerCase())) {
+                String value = row.get(key);
+                System.out.println("row.get(key): " + value);
+                if(row.get(key).toLowerCase().contains(aValue.toLowerCase())) {
                     jobs.add(row);
                     break;
                     }*/

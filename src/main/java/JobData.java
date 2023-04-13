@@ -35,7 +35,7 @@ public class JobData {
         ArrayList<String> values = new ArrayList<>();
 
         for (HashMap<String, String> row : allJobs) {
-            String aValue = row.get(field);
+            String aValue = row.get(field).toLowerCase();
 
             if (!values.contains(aValue)) {
                 values.add(aValue);
@@ -61,6 +61,7 @@ public class JobData {
      * Returns results of search the jobs data by key/value, using
      * inclusion of the search term.
      *
+     *
      * For example, searching for employer "Enterprise" will include results
      * with "Enterprise Holdings, Inc".
      *
@@ -79,7 +80,7 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -93,13 +94,52 @@ public class JobData {
      * @param value The search term to look for
      * @return      List of all jobs with at least one field containing the value
      */
-    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+    public static ArrayList<HashMap<String, String>> findByValue(String aValue) {
 
         // load data, if not already loaded
         loadData();
 
-        // TODO - implement this method
-        return null;
+        /*
+         TODO - implement this method
+        The code that you write should not contain duplicate jobs. So, for example,
+         if a listing has position type Web - Front End and name Front end web dev then searching for web should not include the
+         listing twice.
+        As with printJobs, you should write your code in a way that if a new column is added to the data,
+         your code will automatically search the new column as well.
+        You should NOT write code that calls findByColumnAndValue once for each column.
+         Rather, utilize loops and collection methods as you did above.
+        You should, on the other hand, read and understand findByColumnAndValue, since your code will look similar in some ways.
+        You’ll need to call findByValue from somewhere in main.
+         We’ll leave it up to you to find where. You might have noticed that when you try to search all
+         columns using the app, a message is printed, so that is a good clue to help you find where to place this new method call.
+         Once you find where to call your new method, you can Run the program again to test your code.
+        */
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        ArrayList<HashMap<String, String>> matchingJobs = new ArrayList<>();
+
+        for (HashMap<String, String> row : allJobs) {
+            //System.out.println("row.keySet(): " + row.keySet());
+            //for (String key : row.keySet()) {
+            for (String value : row.values()) { //loops through just the values of one hashmap, little cleaner
+                if(value.toLowerCase().contains(aValue.toLowerCase())) {
+                    jobs.add(row);
+                    break;
+                }
+                /*
+                System.out.println("Key: " + key);
+                String value = row.get(key);
+                System.out.println("row.get(key): " + value);
+                if(row.get(key).toLowerCase().contains(aValue.toLowerCase())) {
+                    jobs.add(row);
+                    break;
+                    }*/
+            }
+        }
+
+        return jobs;
+
     }
 
     /**

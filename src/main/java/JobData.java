@@ -117,11 +117,26 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
+        ArrayList<HashMap<String, String>> matchingJobs = new ArrayList<>();
+
         for (HashMap<String, String> row : allJobs) {
-            for (String key : row.keySet()) {
-                System.out.println(key);
+            //System.out.println("row.keySet(): " + row.keySet());
+            //for (String key : row.keySet()) {
+            for (String rowValue : row.values()) { //loops through the values of one hashmap
+                if(rowValue.toLowerCase().contains(value.toLowerCase())) {
+                    jobs.add(row);
+                    break;
+                }
+                /*
+                System.out.println("Key: " + key);
+                String rowValue = row.get(key);
+                System.out.println("row.get(key): " + rowValue);
+                if(row.get(key).toLowerCase().contains(value.toLowerCase())) {
+                    jobs.add(row);
+                    break;
+                    }*/
             }
-            }
+        }
 
         return jobs;
 
